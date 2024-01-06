@@ -1,0 +1,5 @@
+for devoops package nodemon --->it is used to restart the server automatically
+ when we make changes in the code
+
+ npm install nodemon -g
+ -g global install
