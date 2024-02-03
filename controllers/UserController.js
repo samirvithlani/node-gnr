@@ -54,22 +54,51 @@ const addUser = async (req, res) => {
 };
 
 const deleteUser = async (req, res) => {
+  const id = req.params.id; //params.id
+  const deletedUser = await userModel.findByIdAndDelete(id);
+  console.log("deletedUser", deletedUser);
 
-    const id = req.params.id //params.id
-    const deletedUser = await userModel.findByIdAndDelete(id)
-    console.log("deletedUser",deletedUser)
+  if (deleteUser && deletedUser != null) {
+    res.status(200).json({
+      message: "User Deleted Successfully",
+      data: deletedUser,
+    });
+  } else {
+    res.status(400).json({
+      message: "User Not Found",
+    });
+  }
+};
 
-    if(deleteUser && deletedUser != null){
-      res.status(200).json({
-        message:"User Deleted Successfully",
-        data:deletedUser
-      })
-    }
-    else{
-      res.status(400).json({
-        message:"User Not Found"
-      })
-    }
+const updateUser = async (req, res) => {
+  //update tablename set ?,? where id = ?
+  const id = req.params.id;
+  const userData = req.body;
+
+  const updatedUser = await userModel.findByIdAndUpdate(id,userData)
+  res.status(200).json({
+    message:"User Updated Successfully",
+    data:updatedUser //old data
+  })
+
+};
+const getDataByAgeFilter = async (req, res) => {
+
+  const age = req.params.age;
+
+  const users = await userModel.find({age:{$gte:age}})
+  if(users && users.length > 0){
+    res.status(200).json({
+      message:"success",
+      data:users
+    })
+  }
+  else{
+    res.status(400).json({
+      message:"No Data Found"
+  })
+
+  }
 
 
 }
@@ -78,5 +107,7 @@ module.exports = {
   getAllUserFromDB,
   getUserByID,
   addUser,
-  deleteUser
+  deleteUser,
+  updateUser,
+  getDataByAgeFilter
 };
