@@ -10,11 +10,13 @@ app.use(express.json()); //it will to get data in req.body as json format
 const userRoutes = require("./routes/UserRoutes");
 const prodCategoryRoutes = require("./routes/ProdCategoryRoutes");
 const productRoutes = require("./routes/ProductRoutes");
+const employeeRoutes = require("./routes/EmployeeRoutes")
 
 
 app.use("/users", userRoutes);
 app.use("/category", prodCategoryRoutes);
 app.use("/product", productRoutes);
+app.use("/employee",employeeRoutes)
 
 const PORT = 3000;
 
