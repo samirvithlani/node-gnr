@@ -34,23 +34,13 @@ const addUser = async (req, res) => {
   // })
 
   const user = req.body;
-  if (
-    user.name == undefined ||
-    user.email == undefined ||
-    user.age == undefined
-  ) {
-    //bad request
-    res.status(400).json({
-      message: "data is not correct",
-    });
-  } else {
-    const savedUser = await userModel.create(req.body); //whatever data coming from cline tin req.body objecy it will save in db
 
-    res.status(201).json({
-      message: "success",
-      data: savedUser,
-    });
-  }
+  const savedUser = await userModel.create(req.body); //whatever data coming from cline tin req.body objecy it will save in db
+
+  res.status(201).json({
+    message: "success",
+    data: savedUser,
+  });
 };
 
 const deleteUser = async (req, res) => {
@@ -75,33 +65,27 @@ const updateUser = async (req, res) => {
   const id = req.params.id;
   const userData = req.body;
 
-  const updatedUser = await userModel.findByIdAndUpdate(id,userData)
+  const updatedUser = await userModel.findByIdAndUpdate(id, userData);
   res.status(200).json({
-    message:"User Updated Successfully",
-    data:updatedUser //old data
-  })
-
+    message: "User Updated Successfully",
+    data: updatedUser, //old data
+  });
 };
 const getDataByAgeFilter = async (req, res) => {
-
   const age = req.params.age;
 
-  const users = await userModel.find({age:{$gte:age}})
-  if(users && users.length > 0){
+  const users = await userModel.find({ age: { $gte: age } });
+  if (users && users.length > 0) {
     res.status(200).json({
-      message:"success",
-      data:users
-    })
-  }
-  else{
+      message: "success",
+      data: users,
+    });
+  } else {
     res.status(400).json({
-      message:"No Data Found"
-  })
-
+      message: "No Data Found",
+    });
   }
-
-
-}
+};
 
 module.exports = {
   getAllUserFromDB,
@@ -109,5 +93,5 @@ module.exports = {
   addUser,
   deleteUser,
   updateUser,
-  getDataByAgeFilter
+  getDataByAgeFilter,
 };

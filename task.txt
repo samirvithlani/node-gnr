@@ -1,2 +1,8 @@
 ///populate("cat")=->all category rec...
 get specfic column of category
+
+
+zod
+express-validator
+yup
+joi
