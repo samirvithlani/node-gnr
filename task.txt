@@ -6,3 +6,19 @@ zod
 express-validator
 yup
 joi
+
+
+quesion
+question name
+options:[
+    "modi","rahul","kejriwal","mamta"
+]
+correctoption:0
+
+examModel 
+name
+totalmarks
+questions:[
+    "","","",""
+]
+

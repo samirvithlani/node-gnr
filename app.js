@@ -11,12 +11,16 @@ const userRoutes = require("./routes/UserRoutes");
 const prodCategoryRoutes = require("./routes/ProdCategoryRoutes");
 const productRoutes = require("./routes/ProductRoutes");
 const employeeRoutes = require("./routes/EmployeeRoutes")
+const questionRoutes = require("./routes/QuestionRoutes");
+const examRoutes = require("./routes/ExamRoutes");
 
 
 app.use("/users", userRoutes);
 app.use("/category", prodCategoryRoutes);
 app.use("/product", productRoutes);
 app.use("/employee",employeeRoutes)
+app.use("/question", questionRoutes);
+app.use("/exam", examRoutes);
 
 const PORT = 3000;
 
