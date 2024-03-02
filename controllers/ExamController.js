@@ -29,4 +29,20 @@ const getAllExams = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
-module.exports = { createExam,getAllExams };
+const addQuestionToExam = async (req, res) => {
+  const examId = req.params.examId;
+  const questionId = req.params.questionId;
+
+  try {
+    const exam = await examSchema.findByIdAndUpdate(examId, {
+      $push: { questions: questionId },
+    });
+    res.status(200).json({
+      message: "Question added to exam",
+      data: exam,
+    });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+module.exports = { createExam, getAllExams, addQuestionToExam };
