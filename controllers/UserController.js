@@ -1,4 +1,5 @@
 const userModel = require("../models/UserModel");
+const encrypt = require("../util/encrypt");
 
 const getAllUserFromDB = async (req, res) => {
   const users = await userModel.find();
@@ -24,18 +25,20 @@ const getUserByID = async (req, res) => {
 };
 
 const addUser = async (req, res) => {
-  //req.body
+  const hashedPassword = encrypt.encryptPassword(req.body.password);
+  // const userObjectTosubmit = {
+  //   name: req.body.name,
+  //   email: req.body.email,
+  //   password: hashedPassword,
+  //   age: req.body.age,
+  // }
+  const userObjectTosubmit = Object.assign(req.body, {
+    password: hashedPassword,
+  });
+  console.log("userObjectTosubmit", userObjectTosubmit);
 
-  // const user = req.body
-  // console.log("user",user)
-
-  // res.status(200).json({
-  //     message:"success",
-  // })
-
-  const user = req.body;
-
-  const savedUser = await userModel.create(req.body); //whatever data coming from cline tin req.body objecy it will save in db
+  //  const savedUser = await userModel.create(req.body); //whatever data coming from cline tin req.body objecy it will save in db
+  const savedUser = await userModel.create(userObjectTosubmit); //whatever data coming from cline tin req.body objecy it will save in db
 
   res.status(201).json({
     message: "success",
@@ -87,6 +90,43 @@ const getDataByAgeFilter = async (req, res) => {
   }
 };
 
+const loginUser = async (req, res) => {
+  try {
+    const email = req.body.email;
+    const password = req.body.password; //plain text
+    console.log("email", email);
+    console.log("password", password);
+
+    const emailFromUser =  await userModel.findOne({ email: email });
+    //{userObject}
+    if (emailFromUser) {
+      const isPasswordMatched = encrypt.comparePassword(
+        password,
+        emailFromUser.password
+      );
+      if (isPasswordMatched == true) {
+        res.status(200).json({
+          message: "Login Success",
+          data: emailFromUser,
+        });
+      } else {
+        res.status(400).json({
+          message: "Invalid Password",
+        });
+      }
+    } else {
+      res.status(404).json({
+        message: "User Not Found",
+      });
+    }
+  } catch (err) {
+    res.status(500).json({
+      message: "Internal Server Error",
+      error: err,
+    });
+  }
+};
+
 module.exports = {
   getAllUserFromDB,
   getUserByID,
@@ -94,4 +134,5 @@ module.exports = {
   deleteUser,
   updateUser,
   getDataByAgeFilter,
+  loginUser,
 };

@@ -12,4 +12,5 @@ router.post("/users",zodMiddleware.validateSchema(userValidationSchema),userCont
 router.delete("/users/:id",userController.deleteUser)
 router.put("/users/:id",userController.updateUser)
 router.get("/users/filter/:age",userController.getDataByAgeFilter)
+router.post("/login",userController.loginUser)
 module.exports = router;
