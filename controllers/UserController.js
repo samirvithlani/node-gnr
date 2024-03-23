@@ -1,5 +1,6 @@
 const userModel = require("../models/UserModel");
 const encrypt = require("../util/encrypt");
+const tokenUtil = require("../util/TokenUtil")
 
 const getAllUserFromDB = async (req, res) => {
   const users = await userModel.find();
@@ -105,9 +106,14 @@ const loginUser = async (req, res) => {
         emailFromUser.password
       );
       if (isPasswordMatched == true) {
+        //TOKEN GENERATION
+
+        const token = tokenUtil.generateToken(emailFromUser.toObject());
+
+
         res.status(200).json({
           message: "Login Success",
-          data: emailFromUser,
+          data: token,
         });
       } else {
         res.status(400).json({
