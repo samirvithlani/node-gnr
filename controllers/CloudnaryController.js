@@ -5,8 +5,8 @@ const uploadFile = async(file)=>{
 
 cloundinary.config({
     cloud_name:"dpjoxqisl",
-    api_key:"292199526794599",
-    api_secret:"KKZHWhEwjA1Q0zUx4gVfcsvcVRY"
+    api_key:"add your",
+    api_secret:"add your"
 })
 
     const result = await cloundinary.uploader.upload(file.path);
