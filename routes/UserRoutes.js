@@ -14,4 +14,5 @@ router.delete("/users/:id",userController.deleteUser)
 router.put("/users/:id",userController.updateUser)
 router.get("/users/filter/:age",userController.getDataByAgeFilter)
 router.post("/login",userController.loginUser)
+router.post("/upload",userController.uploadFile)
 module.exports = router;
