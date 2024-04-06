@@ -2,6 +2,7 @@ const userModel = require("../models/UserModel");
 const encrypt = require("../util/encrypt");
 const tokenUtil = require("../util/TokenUtil");
 const cloudinaryController = require("./CloudnaryController");
+const mailUtil = require("../util/MailUtil");
 
 const multer = require("multer");
 
@@ -43,6 +44,9 @@ const addUser = async (req, res) => {
 
   //  const savedUser = await userModel.create(req.body); //whatever data coming from cline tin req.body objecy it will save in db
   const savedUser = await userModel.create(userObjectTosubmit); //whatever data coming from cline tin req.body objecy it will save in db
+  await mailUtil.sendMail(savedUser.email, "Welcome", "Welcome to our App")
+  //optmodel : mail otp mail otp
+  //otp
 
   res.status(201).json({
     message: "success",
