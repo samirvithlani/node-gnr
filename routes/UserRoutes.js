@@ -15,4 +15,5 @@ router.put("/users/:id",userController.updateUser)
 router.get("/users/filter/:age",userController.getDataByAgeFilter)
 router.post("/login",userController.loginUser)
 router.post("/upload",userController.uploadFile)
+router.post("/verifyuser",userController.verifyUser)
 module.exports = router;
